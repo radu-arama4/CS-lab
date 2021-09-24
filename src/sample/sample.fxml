@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainBorderPane" prefHeight="2000" prefWidth="2000" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sample.Controller">
+
+   <top>
+      <MenuBar>
+         <Menu text="Menu">
+            <items>
+               <MenuItem onAction="#addNewFile" text="Import new policy..." />
+               <MenuItem onAction="#showExistingPolicies" text="See existing policies..." />
+               <MenuItem text="Save all as..." onAction="#callSaveItems"/>
+               <MenuItem text="Save selected as..." onAction="#callSaveSelectedItems"/>
+               <SeparatorMenuItem />
+               <MenuItem text="Exit." />
+            </items>
+         </Menu>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox>
+         <TextField text="Search by..." fx:id="searchedItem" onKeyTyped="#searchByName"/>
+         <HBox>
+            <TextField text="Open policy..." fx:id="searchedPolicy"/>
+            <Button text="Open Policy" onAction="#openExistingPolicy"/>
+         </HBox>
+         <ListView fx:id="listView" onMouseClicked="#handleSelectedItem" prefHeight="900" />
+      </VBox>
+   </left>
+   <center>
+      <VBox>
+         <GridPane prefHeight="1923.0" prefWidth="1641.0">
+            <Label text="Type: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextArea fx:id="type" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Description: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextArea fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Info: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextArea fx:id="info" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Solution: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextArea fx:id="solution" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Policy setting name: " GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <TextArea fx:id="policy" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="See also: " GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <TextArea fx:id="seeAlso" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Value type: " GridPane.columnIndex="0" GridPane.rowIndex="6" />
+            <TextArea fx:id="valueType" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Value data: " GridPane.columnIndex="0" GridPane.rowIndex="7" />
+            <TextArea fx:id="valueData" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Reg key: " GridPane.columnIndex="0" GridPane.rowIndex="8" />
+            <TextArea fx:id="regKey" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label text="Reg item: " GridPane.columnIndex="0" GridPane.rowIndex="9" />
+            <TextArea fx:id="regItem" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label text="Reg option: " GridPane.columnIndex="0" GridPane.rowIndex="10" />
+            <TextArea fx:id="regOption" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label text="Reference: " GridPane.columnIndex="0" GridPane.rowIndex="11" />
+            <TextArea fx:id="reference" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+         </GridPane>
+      </VBox>
+   </center>
+</BorderPane>
