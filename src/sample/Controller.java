@@ -17,6 +17,7 @@ import sample.controllers.Dialog;
 import sample.data.CustomItem;
 import sample.util.ParseUtil;
 import sample.util.SerializationDeserializationUtil;
+import sample.util.registry.Registry2;
 
 import java.io.File;
 import java.io.IOException;
@@ -201,5 +202,21 @@ public class Controller {
             }
         });
         listView.getItems().setAll(foundItems);
+    }
+
+    public void performAudit(){
+        for (CustomItem item:items){
+            String path = item.getRegKey();
+
+            if(path!=null){
+                path = path.replaceFirst("HKLM", "HKEY_LOCAL_MACHINE");
+
+                String data = Registry2.readRegistry(path, item.getRegItem());
+
+                System.out.println(data);
+            }
+
+        }
+
     }
 }

@@ -41,7 +41,7 @@ public class ParseUtil {
         CustomItem item = new CustomItem();
 
         List<String> fields = Arrays.asList("type", "description", "info", "solution", "see_also", "value_type",
-                "value_data", "reg_key", "reg_item", "reg_option", "reference", "PolicySettingName");
+                "value_data", "reg_key", "reg_item", "reg_option", "reference", "PolicySettingName", "check_type", "right_type");
 
         String currentField = "";
         String currentValue = "";
@@ -60,39 +60,57 @@ public class ParseUtil {
                             item.setType(info);
                             firstType = false;
                         }
+                        break;
                     }
                     case "description": {
                         item.setDescription(info);
+                        break;
                     }
                     case "info": {
                         item.setInfo(info);
+                        break;
                     }
                     case "solution": {
                         item.setSolution(info);
+                        break;
                     }
                     case "see_also": {
                         item.setSeeAlso(info);
+                        break;
                     }
                     case "value_type": {
                         item.setValueType(info);
+                        break;
                     }
                     case "value_data": {
                         item.setValueData(info);
+                        break;
                     }
                     case "reg_key": {
                         item.setRegKey(info);
+                        break;
                     }
                     case "reg_item": {
                         item.setRegItem(info);
+                        break;
                     }
                     case "reg_option": {
                         item.setRegOption(info);
+                        break;
                     }
                     case "reference": {
                         item.setReference(info);
+                        break;
                     }
                     case "PolicySettingName": {
                         item.setPolicySettingName(info);
+                        break;
+                    }
+                    case "check_type":{
+                        break;
+                    }
+                    case "right_type":{
+                        break;
                     }
                 }
                 currentValue = "";

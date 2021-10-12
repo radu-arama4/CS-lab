@@ -6,3 +6,10 @@ fifth
 sixth
 selected
 selected2
+selected3
+selected4
+newpolicy
+newpolicy2
+newselectedpolicy
+selectednow
+all

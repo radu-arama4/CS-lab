@@ -13,6 +13,7 @@
                <MenuItem onAction="#showExistingPolicies" text="See existing policies..." />
                <MenuItem text="Save all as..." onAction="#callSaveItems"/>
                <MenuItem text="Save selected as..." onAction="#callSaveSelectedItems"/>
+               <MenuItem text="Perform audit" onAction="#performAudit"></MenuItem>
                <SeparatorMenuItem />
                <MenuItem text="Exit." />
             </items>

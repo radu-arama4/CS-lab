@@ -16,7 +16,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Audit Examiner");
         primaryStage.setScene(new Scene(root, 1800, 1000));
         primaryStage.show();
         primStage = primaryStage;
