@@ -67,7 +67,7 @@ public class Controller {
                 observable.addListener((obs, wasSelected, isNowSelected) ->
                         selected.add(item)
                 );
-                return observable ;
+                return observable;
             }
         }));
 
@@ -75,7 +75,7 @@ public class Controller {
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-    private void clearItems(){
+    private void clearItems() {
         listView.getItems().clear();
     }
 
@@ -108,7 +108,7 @@ public class Controller {
         return new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
     }
 
-    private void loadItemInfo(CustomItem item){
+    private void loadItemInfo(CustomItem item) {
         type.setText(item.getType());
         description.setText(item.getDescription());
         info.setText(item.getInfo());
@@ -142,51 +142,51 @@ public class Controller {
         return null;
     }
 
-    public void callSaveItems(){
+    public void callSaveItems() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("myDialog.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Dialog.setItems(items);
     }
 
-    public void showExistingPolicies(){
+    public void showExistingPolicies() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("existingPolicies.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void openExistingPolicy(){
+    public void openExistingPolicy() {
         items = SerializationDeserializationUtil.deserialize(searchedPolicy.getText());
         clearItems();
         loadItems(items);
     }
 
-    public void callSaveSelectedItems(){
+    public void callSaveSelectedItems() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("myDialog.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         List<CustomItem> selectedItems = new LinkedList<>();
         items.forEach(item -> {
-            if (selected.contains(item.getDescription())){
+            if (selected.contains(item.getDescription())) {
                 selectedItems.add(item);
             }
         });
@@ -194,29 +194,49 @@ public class Controller {
         Dialog.setItems(selectedItems);
     }
 
-    public void searchByName(){
+    public void searchByName() {
         List<String> foundItems = new LinkedList<>();
         items.forEach(item -> {
-            if (item.getDescription().startsWith(searchedItem.getText())){
+            if (item.getDescription().startsWith(searchedItem.getText())) {
                 foundItems.add(item.getDescription());
             }
         });
         listView.getItems().setAll(foundItems);
     }
 
-    public void performAudit(){
-        for (CustomItem item:items){
+    public void performAudit() {
+        List<String> passed = new LinkedList<>();
+
+        for (CustomItem item : items) {
             String path = item.getRegKey();
 
-            if(path!=null){
+            if (path != null) {
                 path = path.replaceFirst("HKLM", "HKEY_LOCAL_MACHINE");
 
                 String data = Registry2.readRegistry(path, item.getRegItem());
 
-                System.out.println(data);
+                if(data!=null && !data.equals("0x0")){
+                    passed.add(item.getDescription());
+                }
             }
-
         }
+
+        listView.setCellFactory(list -> {
+            ListCell<String> cell = new ListCell() {
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (passed.contains(item)){
+                        setStyle("-fx-background-color: green; -fx-text-fill: white");
+                        setText((String) item);
+                    }else {
+                        setStyle("-fx-background-color: red; -fx-text-fill: white");
+                        setText((String) item);
+                    }
+                }
+            };
+            return cell;
+        });
 
     }
 }
