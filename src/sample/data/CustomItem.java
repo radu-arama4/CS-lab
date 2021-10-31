@@ -9,7 +9,6 @@ public class CustomItem implements Serializable {
     String description;
     String info;
     String solution;
-    String policySettingName;
     String seeAlso;
     String valueType;
     String valueData;
@@ -21,14 +20,13 @@ public class CustomItem implements Serializable {
     public CustomItem() {
     }
 
-    public CustomItem(String type, String description, String info, String solution, String policySettingName,
+    public CustomItem(String type, String description, String info, String solution,
                       String seeAlso, String valueType, String valueData, String regKey, String regItem,
                       String regOption, String reference) {
         this.type = type;
         this.description = description;
         this.info = info;
         this.solution = solution;
-        this.policySettingName = policySettingName;
         this.seeAlso = seeAlso;
         this.valueType = valueType;
         this.valueData = valueData;
@@ -68,14 +66,6 @@ public class CustomItem implements Serializable {
 
     public void setSolution(String solution) {
         this.solution = solution;
-    }
-
-    public String getPolicySettingName() {
-        return policySettingName;
-    }
-
-    public void setPolicySettingName(String policySettingName) {
-        this.policySettingName = policySettingName;
     }
 
     public String getSeeAlso() {
@@ -141,7 +131,6 @@ public class CustomItem implements Serializable {
                 ", description='" + description + '\'' +
                 ", info='" + info + '\'' +
                 ", solution='" + solution + '\'' +
-                ", policySettingName='" + policySettingName + '\'' +
                 ", seeAlso='" + seeAlso + '\'' +
                 ", valueType='" + valueType + '\'' +
                 ", valueData='" + valueData + '\'' +

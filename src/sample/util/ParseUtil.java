@@ -41,12 +41,12 @@ public class ParseUtil {
         CustomItem item = new CustomItem();
 
         List<String> fields = Arrays.asList("type", "description", "info", "solution", "see_also", "value_type",
-                "value_data", "reg_key", "reg_item", "reg_option", "reference", "PolicySettingName", "check_type", "right_type");
+                "value_data", "reg_key", "reg_item", "reg_option", "reference", "check_type", "right_type");
 
         String currentField = "";
         String currentValue = "";
 
-        element = element.replaceFirst("Policy Setting Name", "PolicySettingName");
+//        element = element.replaceFirst("Policy Setting Name", "PolicySettingName");
 
         boolean firstType = true;
 
@@ -55,6 +55,12 @@ public class ParseUtil {
                 String info = currentValue.replaceFirst(":", "").replaceAll("\"", "")
                         .trim().replaceAll(" +", " ");
                 switch (currentField) {
+                    case "check_type":{
+                        break;
+                    }
+                    case "right_type":{
+                        break;
+                    }
                     case "type": {
                         if (firstType) {
                             item.setType(info);
@@ -100,16 +106,6 @@ public class ParseUtil {
                     }
                     case "reference": {
                         item.setReference(info);
-                        break;
-                    }
-                    case "PolicySettingName": {
-                        item.setPolicySettingName(info);
-                        break;
-                    }
-                    case "check_type":{
-                        break;
-                    }
-                    case "right_type":{
                         break;
                     }
                 }

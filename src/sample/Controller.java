@@ -113,7 +113,6 @@ public class Controller {
         description.setText(item.getDescription());
         info.setText(item.getInfo());
         solution.setText(item.getSolution());
-        policy.setText(item.getPolicySettingName());
         seeAlso.setText(item.getSeeAlso());
         valueType.setText(item.getValueType());
         valueData.setText(item.getValueData());
@@ -235,8 +234,19 @@ public class Controller {
                     }
                 }
             };
+
+
+
             return cell;
         });
+
+        listView.setCellFactory(CheckBoxListCell.forListView((Callback<String, ObservableValue<Boolean>>) item -> {
+            BooleanProperty observable = new SimpleBooleanProperty();
+            observable.addListener((obs, wasSelected, isNowSelected) ->
+                    selected.add(item)
+            );
+            return observable;
+        }));
 
     }
 }
