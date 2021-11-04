@@ -7,7 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -126,8 +129,6 @@ public class Controller {
         String description = (String) listView.getSelectionModel().getSelectedItem();
         CustomItem item = findByDescription(description);
 
-        System.out.println(item.toString());
-
         loadItemInfo(item);
 
     }
@@ -214,31 +215,32 @@ public class Controller {
 
                 String data = Registry2.readRegistry(path, item.getRegItem());
 
-                if(data!=null && !data.equals("0x0")){
+                if (data != null && !data.equals("0x0")) {
                     passed.add(item.getDescription());
                 }
             }
         }
 
-        listView.setCellFactory(list -> {
-            ListCell<String> cell = new ListCell() {
-                @Override
-                protected void updateItem(Object item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (passed.contains(item)){
-                        setStyle("-fx-background-color: green; -fx-text-fill: white");
-                        setText((String) item);
-                    }else {
-                        setStyle("-fx-background-color: red; -fx-text-fill: white");
-                        setText((String) item);
-                    }
+        listView.setCellFactory(list -> new CheckBoxListCell(item -> {
+            BooleanProperty observable = new SimpleBooleanProperty();
+            observable.addListener((obs, wasSelected, isNowSelected) ->
+                    selected.add((String) item)
+            );
+            return observable;
+        }) {
+            @Override
+            public void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (passed.contains(item)) {
+                    setStyle("-fx-background-color: green; -fx-text-fill: white");
+                    setText((String) item);
+                } else {
+                    setStyle("-fx-background-color: red; -fx-text-fill: white");
+                    setText((String) item);
                 }
-            };
-
-
-
-            return cell;
+            }
         });
 
     }
+
 }
