@@ -58,6 +58,10 @@ public class Controller {
 
     List<String> selected = new LinkedList<>();
 
+    List<String> passed = new LinkedList<>();
+
+    List<String> initial = new LinkedList<>();
+
     public void setupStage(Stage stage) {
         this.stage = stage;
     }
@@ -130,7 +134,6 @@ public class Controller {
         CustomItem item = findByDescription(description);
 
         loadItemInfo(item);
-
     }
 
     private CustomItem findByDescription(String description) {
@@ -204,9 +207,61 @@ public class Controller {
         listView.getItems().setAll(foundItems);
     }
 
-    public void performAudit() {
+    public void returnToDefaultSettings(){
+        performAudit();
+    }
+
+    public void overrideItems() {
         List<String> passed = new LinkedList<>();
 
+        for (CustomItem item : items) {
+            String path = item.getRegKey();
+
+            if (path != null) {
+                path = path.replaceFirst("HKLM", "HKEY_LOCAL_MACHINE");
+
+                String data = Registry2.readRegistry(path, item.getRegItem());
+
+                if (data != null && !data.equals("0x0")) {
+                    passed.add(item.getDescription());
+                }
+            }
+        }
+
+        for (String item : selected) {
+            CustomItem item1 = findByDescription(item);
+
+            String path = item1.getRegKey();
+
+            String data = Registry2.readRegistry(path, item1.getRegItem());
+
+            if (!passed.contains(item1.getDescription())) {
+                passed.add(item1.getDescription());
+            }
+        }
+
+        listView.setCellFactory(list -> new CheckBoxListCell(item -> {
+            BooleanProperty observable = new SimpleBooleanProperty();
+            observable.addListener((obs, wasSelected, isNowSelected) ->
+                    selected.add((String) item)
+            );
+            return observable;
+        }) {
+            @Override
+            public void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (passed.contains(item)) {
+                    setStyle("-fx-background-color: green; -fx-text-fill: white");
+                    setText((String) item);
+                } else {
+                    setStyle("-fx-background-color: red; -fx-text-fill: white");
+                    setText((String) item);
+                }
+            }
+        });
+    }
+
+    public void performAudit() {
         for (CustomItem item : items) {
             String path = item.getRegKey();
 
